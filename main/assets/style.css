@@ -1,0 +1,7 @@
+body {
+    background-color: white;
+}
+
+header {
+    background-image: linear-gradient( to right, #6071da, #3A00CA, #3300B2 );
+}
