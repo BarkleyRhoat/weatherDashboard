@@ -4,10 +4,15 @@ console.log("script", "connected");
 
 var apiKey = "4e5568a0982d91762ed501f8faa3eb5c";
 var cityName = "";
-var fetchButton = document.getElementById("fetch-button");
+var fetchButton = document.getElementById("searchButton");
+var cityBox = document.getElementById("previousCities")
 
-function weatherAPI(name) {
-    var weatherURL = 'https:api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}';
+var currentCity = document.getElementById("currentCity");
+var forecastSection = document.getElementById("forecast");
+
+
+function weatherAPI(city) {
+    var weatherUrl = "https:bulk.openweathermap.org/archive/{BULK_FILE_NAME}?appid=${apiKey}";
 
 
     fetch(weatherUrl)
@@ -16,32 +21,75 @@ function weatherAPI(name) {
         })
 
         .then (function (data) {
-            var lat = data(0).lat;
-            var lon = data(0).lon;
+            var lat = data.coord.lat;
+            var lon = data.coord.lon;
             console.log(lat, lon);
             return fetchForecast(lat, lon)
-
-            .then(function(){})
         })
-
-        .then (function (data) {
-            console.log(data); 
+            .then(function (forecastData) {
+                displayForecastData(forecastData);
+         })
+            .catch(function (error) {
+                console.error("Error fetching weather data:", error); 
         });
 }
-weatherAPI("charleston");
 
 function fetchForecast(lat,lon) {
     return fetch(
-        'https://api.openweathermap.org/data/2.5/forrecast?lat=${lat}&lon=${lon}&appid${apiKey}'
+        "https:bulk.openweathermap.org/archive/{BULK_FILE_NAME}?appid=${apikey}"
     )
-
-    .then(function (response) {
-        return response.json();
-    })
-    .then(function (data) {
-        console.log(data);
-        for (var i = 0; i< data.list.length; i = i + 8) {
-            console.log(data.list[i]);
-        }
-    })
+        .then(function (response) {
+            return response.json();
+        })
+        .catch(function (error) {
+            console.error("Error fetching forecast data:", error);
+        });
 }
+
+function displayWeatherData(data) {
+    currentCity.textContent = "Current Weather in ${data.name}";
+}
+
+function displayForecastData(forecastData) {
+    forecastSection.innerhtml = "";
+
+    for (var i = 0; i < forecastData.list.length; i += 8) {
+        var forecast = forecastData.list[i];
+        var forecastItem = document.createElement("div");
+        forecastItem.textContent = forecast.dt_txt + "-" + forecast.main.temp + "°F"
+        forecastSection.appendChild(forecastItem);
+    }
+}
+
+fetchButton.addEventListener("click", citySearch);
+
+function citySearch() {
+    var searchCity = document.getElementById("searchCity").value;
+    weatherAPI(searchCity);
+}
+// weatherAPI("charleston");
+
+// function fetchForecast(lat,lon) {
+//     return fetch(
+//         'https://api.openweathermap.org/data/2.5/forrecast?lat=${lat}&lon=${lon}&appid=4e5568a0982d91762ed501f8faa3eb5c}'
+//     )
+
+//     .then(function (response) {
+//         return response.json();
+//     })
+//     .then(function (data) {
+//         console.log(data);
+//         for (var i = 0; i< data.list.length; i = i + 8) {
+//             console.log(data.list[i]);
+//         }
+//     })
+// }
+
+// fetchButton.addEventListener("click", citySearch);
+
+// function citySearch() {
+//     var searchCity = document.getElementById("searchCity").value;
+//     weatherAPI(searchCity);
+// }
+
+ 
