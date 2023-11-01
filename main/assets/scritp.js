@@ -28,16 +28,19 @@ function weatherAPI(city) {
         });
 }
 
+
 function displayWeatherData(data) {
+    // var currentWeather = 'https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}'
+
     currentCity.textContent = `Current Weather in ${data.name}`;
 }
 
 function displayForecastData(forecastData) {
-    forecastSection.innerHTML = "forecast";
+    forecastSection.innerHTML = "";
 
-    for (var i = 0; i < forecastData.list.length; i += 8) {
+    for (var i = 0; i < forecastData.list.length; i += 5) {
         var forecast = forecastData.list[i];
-        var forecastItem = document.createElement("div");
+        var forecastItem = document.getElementById("forecast");
         forecastItem.textContent = `${forecast.dt_txt} - ${forecast.main.temp}°F`;
         forecastSection.appendChild(forecastItem);
     }
