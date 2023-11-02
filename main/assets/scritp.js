@@ -1,54 +1,54 @@
 console.log("script", "connected");
 
 var apiKey = "4e5568a0982d91762ed501f8faa3eb5c";
-var cityName = "";
-var fetchButton = document.getElementById("searchButton");
-var cityBox = document.getElementById("previousCities");
-var currentCity = document.getElementById("currentCity");
-var forecastSection = document.getElementById("forecast");
 
-function weatherAPI(city) {
-    var weatherUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`;
+function fetchWeatherData(city) {
+    var weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+    var forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&cnt=5&units=imperial&appid=${apiKey}`;
 
     fetch(weatherUrl)
-        .then(function (response) {
-            return response.json();
+        .then(response => response.json())
+        .then(data => {
+            displayWeatherData(data);
+            return fetch(forecastUrl);
         })
-        .then(function (data) {
-            var lat = data[0].lat; 
-            var lon = data[0].lon;
-            console.log(lat, lon);
-            return fetchForecast(lat, lon);
-        })
-        .then(function (forecastData) {
+        .then(response => response.json())
+        .then(forecastData => {
             displayForecastData(forecastData);
         })
-        .catch(function (error) {
-            // console.error("Error fetching weather data:", error);
+        .catch(error => {
+            console.error("Error fetching weather data:", error);
         });
 }
 
-
 function displayWeatherData(data) {
-    // var currentWeather = 'https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}'
-
-    currentCity.textContent = `Current Weather in ${data.name}`;
+    var currentCity = document.getElementById("currentCity");
+    var temperatureInFahrenheit = kelvinToFahrenheit(data.main.temp);
+    currentCity.textContent = `Current Weather in ${data.name}: ${temperatureInFahrenheit}°F`;
 }
 
 function displayForecastData(forecastData) {
-    forecastSection.innerHTML = "";
+    var forecastSection = document.getElementById("forecast");
+    forecastSection.innerHTML = ""; // Clear previous forecast data
 
-    for (var i = 0; i < forecastData.list.length; i += 5) {
+    for (let i = 0; i < forecastData.list.length; i++) {
         var forecast = forecastData.list[i];
-        var forecastItem = document.getElementById("forecast");
+        var forecastItem = document.createElement("div");
         forecastItem.textContent = `${forecast.dt_txt} - ${forecast.main.temp}°F`;
         forecastSection.appendChild(forecastItem);
     }
 }
 
-fetchButton.addEventListener("click", citySearch);
-
-function citySearch() {
-    var searchCity = document.getElementById("searchCity").value;
-    weatherAPI(searchCity);
+function kelvinToFahrenheit(kelvin) {
+    return ((kelvin - 273.15) * 9/5 + 32).toFixed(2);
 }
+
+var searchButton = document.getElementById("searchButton");
+searchButton.addEventListener("click", () => {
+    var searchCity = document.getElementById("searchCity").value;
+    fetchWeatherData(searchCity);
+});
+
+
+
+
