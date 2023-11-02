@@ -3,8 +3,9 @@ console.log("script", "connected");
 var apiKey = "4e5568a0982d91762ed501f8faa3eb5c";
 
 function fetchWeatherData(city) {
-    var weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
-    var forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&cnt=5&units=imperial&appid=${apiKey}`;
+    // var weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+    // var forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&cnt=5&units=imperial&appid=${apiKey}`;
+    // var weatherUrl = 'http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}'
 
     fetch(weatherUrl)
         .then(response => response.json())
