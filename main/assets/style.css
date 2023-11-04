@@ -53,6 +53,7 @@ button {
 #previousCities {
     float: left;
     display: flex;
+    flex-direction: column;
 }
 
 #weather {
@@ -62,10 +63,6 @@ flex-direction: column;
 flex-wrap: wrap;
 margin-top: 10px;
 width: 1603px;
-text-wrap: wrap;
-
-
-
 
 }
 
@@ -74,8 +71,14 @@ text-wrap: wrap;
     height: 300px;
     font-size: 30px;
     justify-content: center;
+    border: black 1px solid; 
+}
 
-    
+h2 {
+display: flex;
+justify-content: left;
+
+
 }
 
 #forecast {
@@ -85,10 +88,18 @@ text-wrap: wrap;
     font-size: 18px;
     text-align: left;
     justify-content: center;
-
+    
 }
 
-.forecast-item {
+
+#forecast div {
+    border: 1px black solid;
+    font-size: 24px;
     display: flex;
-    ;
+    padding: 10px;
+    margin: 10px;
+    color: white;
+    background-color: #3300B2 ;
+   
+
 }

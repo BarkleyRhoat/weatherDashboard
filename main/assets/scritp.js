@@ -1,11 +1,15 @@
 console.log("script", "connected");
 
 var apiKey = "4e5568a0982d91762ed501f8faa3eb5c";
+var searchedCities = [];
 
 function fetchWeatherData(city) {
-    var weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+    var weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=standard&appid=${apiKey}`;
     var forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&cnt=5&units=standard&appid=${apiKey}`;
    
+    searchedCities.push(city);
+    updateSearchHistory();
+
     fetch(weatherUrl)
         .then(response => response.json())
         .then(data => {
@@ -21,6 +25,18 @@ function fetchWeatherData(city) {
         });
 }
 
+function updateSearchHistory() {
+    var previousCities = document.getElementById("previousCities");
+    previousCities.innerHTML = "";
+    currentCity.innerHTML = "";
+    forecast.innerHTML = "";// Clear the previous search history
+
+    for (var i = 0; i < searchedCities.length; i++) {
+        var cityElement = document.createElement("div");
+        cityElement.textContent = searchedCities[i];
+        previousCities.appendChild(cityElement);
+}}
+
 function displayWeatherData(data) {
     var currentCity = document.getElementById("currentCity");
     var temperatureInFahrenheit = kelvinToFahrenheit(data.main.temp);
@@ -32,7 +48,7 @@ function displayWeatherData(data) {
 
 function displayForecastData(forecastData, currentWeatherData) {
     var forecastSection = document.getElementById("forecast");
-    forecastSection.innerHTML = ""; 
+     
 
     for (let i = 0; i < forecastData.list.length; i++) {
         var forecast = forecastData.list[i];
