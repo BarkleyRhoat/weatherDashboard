@@ -34,7 +34,13 @@ function updateSearchHistory() {
     for (var i = 0; i < searchedCities.length; i++) {
         var cityElement = document.createElement("div");
         cityElement.textContent = searchedCities[i];
+        cityElement.classList.add("cityItem");
         previousCities.appendChild(cityElement);
+
+        cityElement.addEventListener("click", function() {
+            var cityName = this.textContent;
+            fetchWeatherData(cityName);
+        });
 }}
 
 function displayWeatherData(data) {
@@ -42,8 +48,9 @@ function displayWeatherData(data) {
     var temperatureInFahrenheit = kelvinToFahrenheit(data.main.temp);
     var windSpeed = data.wind.speed;
     var humidity = data.main.humidity;
+    var weatherIcon = data.main.icon;
     var feelsLike = kelvinToFahrenheit(data.main.feels_like);
-    currentCity.innerHTML = `Current Weather in ${data.name}: ${temperatureInFahrenheit}°F<br>Wind Speed: ${windSpeed} m/s<br>Humidity: ${humidity} %<br>Feels Like: ${feelsLike}°F`;
+    currentCity.innerHTML = `Current Weather in ${data.name}: ${temperatureInFahrenheit}°F<br>Wind Speed: ${windSpeed} m/s<br>Humidity: ${humidity} %<br>Feels Like: ${feelsLike}°F <br> ${weatherIcon}`;
 }
 
 function displayForecastData(forecastData, currentWeatherData) {
@@ -56,9 +63,10 @@ function displayForecastData(forecastData, currentWeatherData) {
         var temperature = forecast.main.temp;
         var windSpeed = forecast.wind.speed;
         var humidity = forecast.main.humidity;
+        var forecastIcon = forecast.main.icon;
         var feelsLike = kelvinToFahrenheit(forecast.main.feels_like);
 
-        forecastItem.innerHTML = `${forecast.dt_txt} - ${temperature}°F<br>Wind Speed: ${windSpeed} m/s<br>Humidity: ${humidity} %<br>Feels Like: ${feelsLike}°F`;
+        forecastItem.innerHTML = `${forecast.dt_txt} - ${temperature}°F<br>Wind Speed: ${windSpeed} m/s<br>Humidity: ${humidity} %<br>Feels Like: ${feelsLike}°F <br> ${forecastIcon}`;
         forecastSection.appendChild(forecastItem);
         
     }
