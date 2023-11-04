@@ -32,7 +32,7 @@ function updateSearchHistory() {
     forecast.innerHTML = "";// Clear the previous search history
 
     for (var i = 0; i < searchedCities.length; i++) {
-        var cityElement = document.createElement("div");
+        var cityElement = document.createElement("button");
         cityElement.textContent = searchedCities[i];
         cityElement.classList.add("cityItem");
         previousCities.appendChild(cityElement);

@@ -57,12 +57,13 @@ button {
 }
 
 #weather {
-float: right;
+justify-content: center;
 display: flex;
 flex-direction: column;
 flex-wrap: wrap;
 margin-top: 10px;
 width: 1603px;
+padding-left: 50px;
 
 }
 
