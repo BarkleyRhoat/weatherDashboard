@@ -2,7 +2,7 @@
 
 ## Description
 
-This project is the start of my portfolio that i am creating throughout this course. I will be using this portfolio to show potential employers. 
+This project allows you to type in the input field any city you would like and it will give you the current weather and also the forecast for it. It will than save your previous search and you will be able to click the city in your previous searches and it will repopulate. The app is using OpenWeather API.
 
 ## Table of Content 
 
@@ -19,13 +19,21 @@ This project is the start of my portfolio that i am creating throughout this cou
 
 to access this website you will click the link in github or type in the url address ""
 
-![screenshot]()
+![screenshot](./main/assets/images/weatherScreenshot1.png)
 
-![screenshot]()
+![screenshot](./main/assets/images/weatherScreenshot2.png)
+
+![screenshot](./main/assets/images/weatherScreenshot3.png)
 
 ## Credits
 
-Referenced: MDN Web Docs - Link (https://developer.mozilla.org/en-US/docs/Web/CSS , https://developer.mozilla.org/en-US/docs/Web/HTML)
+Upenn
+
+Dru Sanchez during tutoring sessions
+
+https://openweathermap.org/api
+
+
 
 
 ## License
